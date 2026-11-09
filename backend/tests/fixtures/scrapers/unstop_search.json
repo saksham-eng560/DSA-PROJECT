@@ -1,0 +1,63 @@
+{
+  "data": {
+    "current_page": 1,
+    "data": [
+      {
+        "id": 1200001,
+        "title": "Python Developer Intern",
+        "type": "internships",
+        "public_url": "internships/python-developer-intern-acme-analytics-1200001",
+        "organisation": {"id": 9001, "name": "Acme Analytics", "logoUrl2": "https://d8it4huxumps7.cloudfront.net/images/9001.png"},
+        "region": "offline",
+        "status": "LIVE",
+        "start_date": "2026-10-20T10:00:00+05:30",
+        "end_date": "2099-12-31T23:59:00+05:30",
+        "jobDetail": {"locations": ["Gurugram", "Delhi"], "min_salary": 10000, "max_salary": 15000,
+                      "currency": "fa-rupee", "pay_in": "monthly", "paid_unpaid": "paid", "show_salary": 1,
+                      "timing": "full_time"},
+        "required_skills": [{"skill": "Python"}, {"skill": "FastAPI"}],
+        "details": "<p>Build APIs with Python and FastAPI for our analytics product.</p>"
+      },
+      {
+        "id": 1200002,
+        "title": "Generative AI",
+        "type": "internships",
+        "seo_url": "https://unstop.com/internships/generative-ai-neuralnest-1200002?lb=xyz",
+        "organisation": {"id": 9002, "name": "NeuralNest"},
+        "region": "online",
+        "status": "LIVE",
+        "start_date": "2026-10-22T09:00:00+05:30",
+        "end_date": "2099-11-30T23:59:00+05:30",
+        "jobDetail": {"locations": [], "paid_unpaid": "unpaid"}
+      },
+      {
+        "id": 1200003,
+        "title": "AI Research Intern",
+        "type": "internships",
+        "public_url": "internships/ai-research-intern-oldco-1200003",
+        "organisation": {"name": "OldCo"},
+        "region": "offline",
+        "end_date": "2020-01-31T23:59:00+05:30",
+        "jobDetail": {"locations": ["Pune"]}
+      },
+      {
+        "id": 1200004,
+        "title": "Backend Developer Intern",
+        "type": "internships",
+        "public_url": "/internships/backend-developer-intern-kite-systems-1200004",
+        "organisation": {"name": "Kite Systems"},
+        "region": "offline",
+        "start_date": "2026-10-18T09:00:00+05:30",
+        "end_date": "2099-12-15T23:59:00+05:30",
+        "locations": [{"city": "Bengaluru", "state": "Karnataka", "country": "India"}],
+        "jobDetail": {"min_salary": "8000", "max_salary": "8000", "pay_in": "monthly", "show_salary": 1}
+      }
+    ],
+    "first_page_url": "https://unstop.com/api/public/opportunity/search-result?page=1",
+    "from": 1,
+    "last_page": 1,
+    "per_page": 18,
+    "to": 4,
+    "total": 4
+  }
+}

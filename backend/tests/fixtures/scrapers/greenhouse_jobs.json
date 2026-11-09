@@ -1,0 +1,13 @@
+{"jobs": [
+  {"id": 7001, "internal_job_id": 55, "title": "Backend Engineer, Payments", "updated_at": "2026-09-20T10:00:00-04:00",
+   "first_published": "2026-09-18T10:00:00-04:00", "requisition_id": "R1", "location": {"name": "San Francisco, CA"},
+   "absolute_url": "https://job-boards.greenhouse.io/stripe/jobs/7001", "company_name": "Stripe",
+   "metadata": [{"id": 1, "name": "Employment Type", "value": "Full-time", "value_type": "single_select"}],
+   "content": "&lt;p&gt;We are looking for a backend engineer with 3+ years experience in &lt;strong&gt;Python&lt;/strong&gt;, PostgreSQL and Kubernetes. The salary range is $150,000 - $210,000.&lt;/p&gt;",
+   "departments": [{"id": 1, "name": "Engineering"}], "offices": [{"id": 1, "name": "SF"}]},
+  {"id": 7002, "title": "Account Executive", "updated_at": "2026-09-20T10:00:00-04:00", "location": {"name": "New York"},
+   "absolute_url": "https://job-boards.greenhouse.io/stripe/jobs/7002", "content": "&lt;p&gt;Sales role&lt;/p&gt;", "departments": []},
+  {"id": 7003, "title": "Software Engineering Intern (Summer 2027)", "updated_at": "2026-09-25T10:00:00-04:00",
+   "location": {"name": "Remote - US"}, "absolute_url": "https://job-boards.greenhouse.io/stripe/jobs/7003",
+   "content": "&lt;p&gt;Internship for students. Python or Java.&lt;/p&gt;", "departments": []}
+], "meta": {"total": 3}}

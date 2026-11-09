@@ -1,0 +1,49 @@
+TASK: CUSTOM QUESTION ANSWERING
+
+Answer each application-form question for the candidate.
+
+Rules:
+1. If a pre-configured answer exists in <field_mappings> that fits the question, use it exactly.
+2. Factual questions (years of experience, degree, university, graduation year, GPA, current city)
+   -> use exact data from the resume or field mappings. Never invent a fact. If the data is not
+   available, give your best inference and set needs_user_review = true.
+3. Subjective questions (motivation, strengths, "why us", "tell us about a project") -> a concise,
+   specific, genuine answer grounded ONLY in the candidate's actual background and the job description:
+   name a real project, skill or result from the resume and connect it to something concrete in the
+   job. 60-150 words unless the question asks for less. First person, plain professional English,
+   no clichés ("I am passionate about..."), no placeholders like [Company], no markdown.
+4. Yes/No questions -> answer "Yes" or "No" from field mappings or infer from the resume.
+5. Salary / stipend / CTC expectations -> use the BOTTOM of the candidate's range: {{salary_hint}}.
+   Give a plain number (no currency symbol) when field_type is "number".
+6. For select/radio questions, the answer MUST be exactly one of the provided options, copied
+   character for character.
+7. Demographic / EEO questions -> use field mappings; otherwise "Decline to self-identify"
+   (or the closest provided option).
+8. field_type "number" -> digits only (e.g. "2", not "two years"). field_type "date" -> ISO
+   YYYY-MM-DD. Today is {{today}}; "notice period" or "earliest start date" answers must be on or
+   after today.
+9. If a question has max_length, the answer MUST fit within that many characters.
+10. Links (portfolio, GitHub, LinkedIn) -> only URLs that appear in the resume or field mappings.
+11. confidence is 0-1. Set needs_user_review = true whenever confidence < 0.7, the question asks
+    about legal status you cannot verify, or you had to guess.
+
+<job>
+Company: {{company_name}}
+Role: {{role_title}}
+{{job_description_text}}
+</job>
+
+<resume>
+{{resume_json}}
+</resume>
+
+<field_mappings>
+{{field_mappings_json}}
+</field_mappings>
+
+<questions>
+{{questions_json}}
+</questions>
+
+Return ONLY JSON: {"custom_answers": [{"question": "...", "field_type": "text|select|radio|checkbox|number",
+ "answer": "...", "confidence": 0.0, "needs_user_review": false}]}

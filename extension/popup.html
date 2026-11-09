@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AutoApply AI</title>
+  <style>
+    :root { --primary: #4f46e5; --fg: #0f172a; --muted: #64748b; --border: #e2e8f0; --ok: #059669; --err: #dc2626; --bg: #fff; }
+    @media (prefers-color-scheme: dark) { :root { --fg: #f1f5f9; --muted: #94a3b8; --border: #334155; --bg: #0f172a; } }
+    body { width: 320px; margin: 0; padding: 16px; font: 13px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--fg); background: var(--bg); }
+    h1 { font-size: 15px; margin: 0 0 2px; display: flex; align-items: center; gap: 8px; }
+    h1 img { width: 20px; height: 20px; }
+    h2 { font-size: 12px; margin: 14px 0 0; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    p.sub { margin: 0 0 12px; color: var(--muted); }
+    label { display: block; font-weight: 600; margin: 10px 0 4px; }
+    input { width: 100%; box-sizing: border-box; padding: 7px 9px; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: var(--fg); font: inherit; }
+    button { width: 100%; margin-top: 10px; padding: 8px; border: 0; border-radius: 6px; background: var(--primary); color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+    button.secondary { background: transparent; color: var(--fg); border: 1px solid var(--border); }
+    button:disabled { opacity: .6; cursor: default; }
+    .buttons { display: flex; gap: 8px; }
+    .buttons button { flex: 1; }
+    .status { margin-top: 12px; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border); }
+    .ok { color: var(--ok); } .err { color: var(--err); }
+    .row { display: flex; justify-content: space-between; gap: 8px; }
+    .hint { color: var(--muted); font-size: 12px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1><img src="icons/icon48.png" alt="" /> AutoApply AI</h1>
+  <p class="sub">Session sync — LinkedIn &amp; Internshala</p>
+
+  <form id="config">
+    <label for="dashboardUrl">Dashboard URL</label>
+    <input id="dashboardUrl" type="url" placeholder="http://localhost:3000" required />
+    <label for="token">Extension token</label>
+    <input id="token" type="password" placeholder="Settings → Integrations → Generate extension token" />
+    <button type="submit" class="secondary">Save settings</button>
+  </form>
+
+  <div class="buttons">
+    <button id="sync">Sync LinkedIn session</button>
+    <button id="syncInternshala">Sync Internshala session</button>
+  </div>
+
+  <div class="status">
+    <h2>LinkedIn</h2>
+    <div class="row"><span>Login</span><span id="login">…</span></div>
+    <div class="row"><span>Last sync</span><span id="lastSync">never</span></div>
+    <div id="message"></div>
+    <h2>Internshala</h2>
+    <div class="row"><span>Login</span><span id="internshalaLogin">…</span></div>
+    <div class="row"><span>Last sync</span><span id="internshalaLastSync">never</span></div>
+    <div id="internshalaMessage"></div>
+  </div>
+  <p class="hint">Nothing is sent anywhere except your own dashboard (the URL above), where your sessions are stored encrypted.
+    They re-sync every 12 hours and whenever LinkedIn or Internshala renews your login; Internshala starts after your first manual sync.</p>
+  <script src="popup.js"></script>
+</body>
+</html>

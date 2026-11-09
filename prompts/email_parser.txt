@@ -1,0 +1,39 @@
+TASK: EMAIL INTENT PARSING
+
+Analyze this email received by a job seeker and extract actionable information.
+
+Intents:
+- acknowledgment: automated "we received your application"
+- rejection: the company is not moving forward
+- interview_invite: invitation to schedule or confirmation of an interview / phone screen
+- assessment: coding challenge, take-home, online test
+- offer: job offer
+- follow_up: recruiter checking in / asking for availability without a concrete interview
+- info_request: the company asks for documents or information
+- generic: job-related but none of the above (newsletters, job alerts)
+
+status_update must be one of: acknowledged, rejected, screening, interview, assessment,
+final_round, offer, or "none" when the application status should not change.
+Use "screening" for recruiter/phone screens and "interview" for technical/onsite rounds.
+Dates must be ISO-8601 with timezone offset when the email states one. Today is {{today}}
+(candidate timezone: {{timezone}}) - resolve relative dates like "next Tuesday" against it.
+The suggested_reply is a short, polite, ready-to-send draft signed by {{candidate_name}}
+(empty string for rejections that need no reply and for automated acknowledgments).
+
+<known_applications>
+{{applications_json}}
+</known_applications>
+
+<email>
+From: {{sender}}
+Subject: {{subject}}
+Date: {{received_at}}
+
+{{body}}
+</email>
+
+Return ONLY JSON:
+{"intent": "...", "confidence": 0.0, "company_name": "...", "matched_application_id": "uuid or empty",
+ "extracted_details": {"interview_date": "", "interview_type": "phone_screen|video_call|onsite|technical|behavioral|panel|take_home|pair_programming|other|",
+ "duration_minutes": 0, "meeting_link": "", "interviewer_name": "", "deadline": "", "next_steps": ""},
+ "suggested_reply": "", "urgency": "high|medium|low", "status_update": "..."}

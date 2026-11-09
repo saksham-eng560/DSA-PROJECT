@@ -1,0 +1,12 @@
+[
+ {"id": "a1b2c3d4-0000-4000-8000-000000000001", "text": "Senior Software Engineer, Platform",
+  "categories": {"commitment": "Full-time", "department": "Engineering", "location": "Remote, US", "team": "Platform", "allLocations": ["Remote, US"]},
+  "description": "<div>Build our platform with Go and Kubernetes.</div>", "descriptionPlain": "Build our platform with Go and Kubernetes.",
+  "lists": [{"text": "Requirements", "content": "<li>5+ years experience</li><li>Go, Kubernetes, AWS</li>"}],
+  "additional": "<div>Benefits!</div>", "hostedUrl": "https://jobs.lever.co/acme/a1b2c3d4-0000-4000-8000-000000000001",
+  "applyUrl": "https://jobs.lever.co/acme/a1b2c3d4-0000-4000-8000-000000000001/apply", "createdAt": 1790000000000,
+  "workplaceType": "remote", "salaryRange": {"currency": "USD", "interval": "per-year-salary", "min": 180000, "max": 220000}},
+ {"id": "a1b2c3d4-0000-4000-8000-000000000002", "text": "Office Manager", "categories": {"commitment": "Part-time", "location": "Austin, TX"},
+  "description": "<div>Office</div>", "lists": [], "hostedUrl": "https://jobs.lever.co/acme/2", "applyUrl": "https://jobs.lever.co/acme/2/apply",
+  "createdAt": 1790000000000, "workplaceType": "onsite"}
+]

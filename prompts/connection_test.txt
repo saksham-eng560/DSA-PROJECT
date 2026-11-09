@@ -1,0 +1,8 @@
+TASK: CONNECTION TEST
+
+This is a quick check, started from the Settings page, that the AI model is reachable and answers
+in JSON. Set "ok" to true and put one short, friendly sentence (at most 15 words) in "reply" saying
+that you are ready to help with job applications.
+
+Return ONLY the JSON object:
+{"ok": true, "reply": "..."}

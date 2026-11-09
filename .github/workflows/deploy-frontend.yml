@@ -1,0 +1,52 @@
+# Deploys the dashboard to Vercel after CI passes on main.
+#
+# One-time setup (see README "Deploying to AWS + Vercel"):
+#   1. Create a Vercel project for this repo with Root Directory "frontend" and set its environment variables:
+#        BACKEND_URL=https://api.your-domain.com            (the dashboard proxies /api/v1/* there)
+#        NEXT_PUBLIC_WS_URL=wss://api.your-domain.com/api/v1/ws
+#   2. Repository variables VERCEL_ORG_ID and VERCEL_PROJECT_ID (from `vercel link` -> .vercel/project.json)
+#      and repository secret VERCEL_TOKEN.
+# Without VERCEL_PROJECT_ID the workflow is skipped.
+name: Deploy dashboard (Vercel)
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-frontend
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: >-
+      vars.VERCEL_PROJECT_ID != '' &&
+      (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success')
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      # The project's Root Directory is "frontend", so the CLI runs from the repository root.
+      - name: Pull project settings
+        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+      - name: Build
+        run: vercel build --prod --token="$VERCEL_TOKEN"
+      - name: Deploy
+        run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"

@@ -1,0 +1,24 @@
+TASK: RESUME PARSING
+
+Convert the raw resume text below into structured JSON. Copy facts exactly; do not
+summarize away details, do not invent anything, and leave fields empty ("" or []) when
+the resume does not contain them. Keep every bullet point. Dates as written (e.g. "Jan 2022",
+"2021", "Present").
+
+Skills: split into technical (programming, frameworks, methods), languages (spoken/natural
+languages AND programming languages may both appear - put programming languages in
+technical), tools (software, platforms, cloud services), soft_skills.
+
+<resume_text>
+{{resume_text}}
+</resume_text>
+
+Return ONLY JSON:
+{"personal_info": {"name": "", "email": "", "phone": "", "location": "", "linkedin": "", "github": "", "portfolio": ""},
+ "summary": "",
+ "education": [{"institution": "", "degree": "", "field": "", "gpa": "", "start_date": "", "end_date": "", "highlights": []}],
+ "experience": [{"company": "", "title": "", "start_date": "", "end_date": "", "location": "", "bullets": []}],
+ "projects": [{"name": "", "description": "", "technologies": [], "url": ""}],
+ "skills": {"technical": [], "languages": [], "tools": [], "soft_skills": []},
+ "certifications": [{"name": "", "issuer": "", "date": ""}],
+ "awards": []}

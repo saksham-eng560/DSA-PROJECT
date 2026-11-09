@@ -1,0 +1,27 @@
+<!doctype html>
+<html><head><title>Software Engineer - Acme Corp</title></head>
+<body>
+<main>
+  <h1>Software Engineer</h1>
+  <p>Thank you for your interest in Acme Corp. We build developer tools. Requirements: Python, FastAPI, PostgreSQL.</p>
+  <form id="application-form" method="post" action="/submit" enctype="multipart/form-data">
+    <label for="first_name">First Name *</label><input id="first_name" name="first_name" required>
+    <label for="last_name">Last Name *</label><input id="last_name" name="last_name" required>
+    <label for="email">Email *</label><input id="email" name="email" type="email" required>
+    <label for="phone">Phone</label><input id="phone" name="phone" type="tel">
+    <label for="resume">Resume/CV *</label><input id="resume" name="resume" type="file" required>
+    <label for="cover_letter">Cover Letter</label><textarea id="cover_letter" name="cover_letter"></textarea>
+    <label for="question_1">LinkedIn Profile</label><input id="question_1" name="question_1">
+    <div class="field"><div class="label">Are you legally authorized to work in the United States? *</div>
+      <label><input type="radio" name="auth" value="yes" required> Yes</label>
+      <label><input type="radio" name="auth" value="no"> No</label></div>
+    <label for="sponsor">Will you now or in the future require sponsorship? *</label>
+    <select id="sponsor" name="sponsor" required><option value="">Select...</option><option>Yes</option><option>No</option></select>
+    <label for="why">Why do you want to work at Acme? *</label><textarea id="why" name="why" required></textarea>
+    <label for="gender">Gender</label>
+    <select id="gender" name="gender"><option value="">Select...</option><option>Male</option><option>Female</option><option>Decline To Self Identify</option></select>
+    <label><input type="checkbox" name="consent" required> I agree to the privacy policy *</label>
+    <button type="submit">Submit application</button>
+  </form>
+</main>
+</body></html>

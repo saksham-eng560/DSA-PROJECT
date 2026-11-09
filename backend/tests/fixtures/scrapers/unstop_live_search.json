@@ -1,0 +1,315 @@
+{
+ "data": {
+  "current_page": 1,
+  "data": [
+   {
+    "id": 1770195,
+    "public_url": "internships/machine-learning-internship-zenotalent-1770195",
+    "title": "Machine Learning Internship",
+    "organization_id": 1841361,
+    "type": "jobs",
+    "subtype": "internships",
+    "regn_open": 1,
+    "updated_at": "2026-10-14T12:45:31+05:30",
+    "region": "online",
+    "visibility": "public",
+    "details": "<p><strong>Zenotalent is hiring for Machine Learning Intern&lt;/strong&gt;&lt;/p&gt;\n<p><strong>About the Company&lt;/strong&gt;&lt;/p&gt;\n<p>Zenotalent is building a collaborative environment where emerging technology professionals can learn, experiment, and contribute to meaningful digital solutions. The company values curiosity, practical problem-solving, and continuous development.&lt;/p&gt;\n<p><strong>Responsibilities&lt;/strong&gt;&lt;/p&gt;\n<ul>\n<li>Support the development, testing, and i",
+    "short_id": "Si2T8bc",
+    "logoUrl2": "https://d8it4huxumps7.cloudfront.net/uploads/images/150x150/6acf2bf03891a_organisation_image-lx1QE6OsxU231958186AYGGoNbo41.png",
+    "organisation": {
+     "id": 1841361,
+     "name": "Zenotalent",
+     "public_url": "c/zenotalent-1841361",
+     "logoUrl": "https://d8it4huxumps7.cloudfront.net/images/partners/new_organisation_image-lx1QE6OsxU231958186AYGGoNbo41.png",
+     "logoUrl2": "https://d8it4huxumps7.cloudfront.net/images/partners/new_organisation_image-lx1QE6OsxU231958186AYGGoNbo41.png",
+     "show_evaluator_login_link": false,
+     "official_email_domains": null,
+     "tier": null
+    },
+    "seo_url": "https://unstop.com/internships/machine-learning-internship-zenotalent-1770195",
+    "status": "LIVE",
+    "tags": [],
+    "thumb": null,
+    "isPaid": false,
+    "festival": null,
+    "prizes": [],
+    "address_with_country_logo": {
+     "address": "",
+     "city": "",
+     "state": "",
+     "country": ""
+    },
+    "short_url": "https://unstop.com/o/Si2T8bc",
+    "assignedTag": {
+     "tag": null
+    },
+    "required_skills": [
+     {
+      "id": 646619,
+      "skill": "Machine Learning Concepts",
+      "skill_name": "Machine Learning Concepts",
+      "pivot": {
+       "entity_id": 1770195,
+       "subject_id": 646619,
+       "id": 6545279,
+       "ai_generated": true
+      }
+     },
+     {
+      "id": 647074,
+      "skill": "Python",
+      "skill_name": "Python",
+      "pivot": {
+       "entity_id": 1770195,
+       "subject_id": 647074,
+       "id": 6545280,
+       "ai_generated": true
+      }
+     },
+     {
+      "id": 643588,
+      "skill": "Data Cleaning",
+      "skill_name": "Data Cleaning",
+      "pivot": {
+       "entity_id": 1770195,
+       "subject_id": 643588,
+       "id": 6545281,
+       "ai_generated": true
+      }
+     },
+     {
+      "id": 643585,
+      "skill": "Data Analysis Tools",
+      "skill_name": "Data Analysis Tools",
+      "pivot": {
+       "entity_id": 1770195,
+       "subject_id": 643585,
+       "id": 6545282,
+       "ai_generated": true
+      }
+     },
+     {
+      "id": 645087,
+      "skill": "Statistics",
+      "skill_name": "Statistics",
+      "pivot": {
+       "entity_id": 1770195,
+       "subject_id": 645087,
+       "id": 6545283,
+       "ai_generated": true
+      }
+     }
+    ],
+    "locations": [],
+    "jobDetail": {
+     "entity_id": 1770195,
+     "max_salary": 35000,
+     "currency": "fa-rupee",
+     "locations": [],
+     "type": "wfh",
+     "min_salary": 35000,
+     "show_salary": 1,
+     "min_experience": null,
+     "max_experience": null,
+     "timing": "full_time",
+     "paid_unpaid": "paid",
+     "pay_in": "monthly",
+     "not_disclosed": false
+    },
+    "end_date": "2026-10-28T23:59:59+05:30",
+    "approved_date": "2026-10-14 12:45:31 GMT+0530",
+    "viewsCount": 19443,
+    "registerCount": 4404,
+    "regnRequirements": {
+     "opportunity_id": 1770195,
+     "start_regn_dt": "2026-10-14T00:00:00+05:30",
+     "end_regn_dt": "2026-10-28T23:59:59+05:30",
+     "show_deadline": 1,
+     "min_team_size": 1,
+     "max_team_size": 1,
+     "work_location_type": "city",
+     "reg_status": "STARTED",
+     "remainingDaysArray": {
+      "durations": 2,
+      "text": " days left"
+     },
+     "remain_days": "2 days left",
+     "remaining_time": 250873
+    }
+   },
+   {
+    "id": 1774793,
+    "public_url": "internships/ai-machine-learning-internship-nexvia-technologies-1774793",
+    "title": "AI &amp; Machine Learning Internship",
+    "organization_id": 2109251,
+    "type": "jobs",
+    "subtype": "internships",
+    "regn_open": 1,
+    "updated_at": "2026-10-24T20:06:35+05:30",
+    "region": "online",
+    "visibility": "public",
+    "details": "<p><strong>Job Description&lt;/strong&gt;&lt;/p&gt;\n<p>Nexvia Technologies invites freshers interested in Artificial Intelligence and Machine Learning to gain practical experience through project-based work.&lt;/p&gt;\n<p><strong>Responsibilities&lt;/strong&gt;&lt;/p&gt;\n<ul>\n<li>Work on assigned AI/ML projects and technical tasks.&lt;/li&gt;\n<li>Perform data preprocessing and exploratory data analysis.&lt;/li&gt;\n<li>Develop, train, and evaluate machine learning models.&lt;/li&gt;\n<li>Apply Pyth",
+    "short_id": "WEyFq9z",
+    "logoUrl2": "https://d8it4huxumps7.cloudfront.net/uploads/images/150x150/6adc9f3843904_organisation_image-Vl9VNWYJvj1397469432myOClyJMgm.png",
+    "organisation": {
+     "id": 2109251,
+     "name": "Nexvia Technologies",
+     "public_url": "c/nexvia-technologies-2109251",
+     "logoUrl": "https://d8it4huxumps7.cloudfront.net/images/partners/new_organisation_image-Vl9VNWYJvj1397469432myOClyJMgm.png",
+     "logoUrl2": "https://d8it4huxumps7.cloudfront.net/images/partners/new_organisation_image-Vl9VNWYJvj1397469432myOClyJMgm.png",
+     "show_evaluator_login_link": false,
+     "official_email_domains": null,
+     "tier": null
+    },
+    "seo_url": "https://unstop.com/internships/ai-machine-learning-internship-nexvia-technologies-1774793",
+    "status": "LIVE",
+    "tags": [],
+    "thumb": null,
+    "isPaid": false,
+    "festival": null,
+    "prizes": [],
+    "address_with_country_logo": {
+     "address": "",
+     "city": "",
+     "state": "",
+     "country": ""
+    },
+    "short_url": "https://unstop.com/o/WEyFq9z",
+    "assignedTag": {
+     "tag": null
+    },
+    "required_skills": [
+     {
+      "id": 647074,
+      "skill": "Python",
+      "skill_name": "Python",
+      "pivot": {
+       "entity_id": 1774793,
+       "subject_id": 647074,
+       "id": 6654437,
+       "ai_generated": true
+      }
+     },
+     {
+      "id": 646619,
+      "skill": "Machine Learning Concepts",
+      "skill_name": "Machine Learning Concepts",
+      "pivot": {
+       "entity_id": 1774793,
+       "subject_id": 646619,
+       "id": 6654438,
+       "ai_generated": true
+      }
+     },
+     {
+      "id": 644745,
+      "skill": "Python Scientific Libraries (NumPy, SciPy, Pandas)",
+      "skill_name": "Python Scientific Libraries (NumPy, SciPy, Pandas)",
+      "pivot": {
+       "entity_id": 1774793,
+       "subject_id": 644745,
+       "id": 6654439,
+       "ai_generated": true
+      }
+     },
+     {
+      "id": 644912,
+      "skill": "Scikit-learn",
+      "skill_name": "Scikit-learn",
+      "pivot": {
+       "entity_id": 1774793,
+       "subject_id": 644912,
+       "id": 6654440,
+       "ai_generated": true
+      }
+     },
+     {
+      "id": 643795,
+      "skill": "Exploratory Data Analysis (EDA)",
+      "skill_name": "Exploratory Data Analysis (EDA)",
+      "pivot": {
+       "entity_id": 1774793,
+       "subject_id": 643795,
+       "id": 6654441,
+       "ai_generated": true
+      }
+     }
+    ],
+    "locations": [
+     {
+      "id": 1873586,
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "country": "India",
+      "addressable_id": 1774793,
+      "addressable_type": "App\\Model\\Opportunity"
+     }
+    ],
+    "jobDetail": {
+     "entity_id": 1774793,
+     "max_salary": 35000,
+     "currency": "fa-rupee",
+     "locations": [
+      "Hyderabad"
+     ],
+     "type": "hybrid",
+     "min_salary": 20000,
+     "show_salary": 1,
+     "min_experience": null,
+     "max_experience": null,
+     "timing": "full_time",
+     "paid_unpaid": "paid",
+     "pay_in": "monthly",
+     "not_disclosed": false
+    },
+    "end_date": "2026-11-07T23:53:00+05:30",
+    "approved_date": "2026-10-24 17:36:46 GMT+0530",
+    "viewsCount": 162,
+    "registerCount": 512,
+    "regnRequirements": {
+     "opportunity_id": 1774793,
+     "start_regn_dt": "2026-10-24T00:00:00+05:30",
+     "end_regn_dt": "2026-11-07T23:53:00+05:30",
+     "show_deadline": 1,
+     "min_team_size": 1,
+     "max_team_size": 1,
+     "work_location_type": "city",
+     "reg_status": "STARTED",
+     "remainingDaysArray": {
+      "durations": 12,
+      "text": " days left"
+     },
+     "remain_days": "12 days left",
+     "remaining_time": 1114469
+    }
+   }
+  ],
+  "first_page_url": "https://unstop.com/api/public/opportunity/search-result?&amp;opportunity=internships&amp;searchTerm=machine%20learning&amp;oppstatus=open&amp;per_page=8&amp;page=1",
+  "from": 1,
+  "last_page": 1,
+  "last_page_url": "https://unstop.com/api/public/opportunity/search-result?&amp;opportunity=internships&amp;searchTerm=machine%20learning&amp;oppstatus=open&amp;per_page=8&amp;page=1",
+  "links": [
+   {
+    "url": null,
+    "label": "« Previous",
+    "active": false
+   },
+   {
+    "url": "https://unstop.com/api/public/opportunity/search-result?&amp;opportunity=internships&amp;searchTerm=machine%20learning&amp;oppstatus=open&amp;per_page=8&amp;page=1",
+    "label": "1",
+    "active": true
+   },
+   {
+    "url": null,
+    "label": "Next »",
+    "active": false
+   }
+  ],
+  "next_page_url": null,
+  "path": "https://unstop.com/api/public/opportunity/search-result?",
+  "per_page": 8,
+  "prev_page_url": null,
+  "to": 2,
+  "total": 2
+ }
+}

@@ -1,0 +1,11 @@
+{"apiVersion": "1", "jobs": [
+  {"id": "f00d-1", "title": "Software Engineer, Backend", "department": "Engineering", "team": "Infra", "employmentType": "FullTime",
+   "location": "San Francisco", "secondaryLocations": [{"location": "New York"}], "isRemote": false, "workplaceType": "Hybrid",
+   "descriptionHtml": "<p>Python and PostgreSQL. We build AI tools.</p>", "descriptionPlain": "Python and PostgreSQL.",
+   "publishedAt": "2026-09-21T00:00:00.000Z", "jobUrl": "https://jobs.ashbyhq.com/openai/f00d-1",
+   "applyUrl": "https://jobs.ashbyhq.com/openai/f00d-1/application", "isListed": true,
+   "compensation": {"compensationTierSummary": "$200K – $300K", "summaryComponents": [
+     {"compensationType": "Salary", "interval": "1 YEAR", "currencyCode": "USD", "minValue": 200000, "maxValue": 300000}]}},
+  {"id": "f00d-2", "title": "Research Scientist", "employmentType": "FullTime", "location": "London", "isRemote": false,
+   "descriptionHtml": "<p>Research</p>", "publishedAt": "2026-09-21T00:00:00.000Z", "jobUrl": "https://jobs.ashbyhq.com/openai/f00d-2", "isListed": true}
+]}

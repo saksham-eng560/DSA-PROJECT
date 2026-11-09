@@ -1,0 +1,17 @@
+TASK: LINKEDIN PROFILE CHANGE DETECTION
+
+Compare the candidate's current LinkedIn profile text with their stored master resume.
+Identify only substantive differences: new or changed positions, new education,
+certifications, skills, projects, or a changed headline/summary/location.
+Do not report formatting differences.
+
+<master_resume>
+{{master_resume_json}}
+</master_resume>
+
+<linkedin_profile_text>
+{{profile_text}}
+</linkedin_profile_text>
+
+Return ONLY JSON: {"has_changes": bool, "changes": [{"section": "...", "change": "...", "linkedin_value": "..."}],
+ "summary": "one sentence"}

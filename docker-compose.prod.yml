@@ -1,0 +1,163 @@
+# Production on a single VM (e.g. a $12/mo VPS) with automatic HTTPS via Caddy.
+#   1. Point DNS for $DOMAIN at the server.
+#   2. cp .env.example .env and set DOMAIN, SECRET_KEY, ENCRYPTION_KEY, POSTGRES_PASSWORD (+ API keys).
+#   3. docker compose -f docker-compose.prod.yml up -d --build
+# Free AI on this server: WITH_OLLAMA=1 scripts/server-setup.sh, or COMPOSE_PROFILES=ollama,
+# LLM_PROVIDER=ollama, OLLAMA_BASE_URL=http://ollama:11434 and OLLAMA_MODEL=qwen3.5:4b in .env (README).
+# For AWS ECS/Fargate + Vercel see .github/workflows/deploy-*.yml and README.md.
+name: autoapply-prod
+
+x-backend: &backend
+  build:
+    context: .
+    dockerfile: backend/Dockerfile
+  init: true  # reaps Chromium child processes
+  image: autoapply-backend:prod
+  env_file: .env
+  environment:
+    ENVIRONMENT: production
+    DATABASE_URL: postgresql+psycopg://autoapply:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@postgres:5432/autoapply
+    REDIS_URL: redis://redis:6379/0
+    LOCAL_STORAGE_PATH: /data/storage
+    FRONTEND_URL: https://${DOMAIN:?set DOMAIN}
+    PUBLIC_API_URL: https://${DOMAIN}
+    CORS_ORIGINS: https://${DOMAIN}
+    COOKIE_SECURE: "true"
+    SECRET_KEY: ${SECRET_KEY:?set SECRET_KEY}
+    ENCRYPTION_KEY: ${ENCRYPTION_KEY:?set ENCRYPTION_KEY}
+  volumes:
+    - storage:/data
+  extra_hosts:
+    - "host.docker.internal:host-gateway"  # an Ollama installed on the server itself (not in Docker)
+  depends_on:
+    postgres:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+  restart: always
+  logging:
+    driver: json-file
+    options: { max-size: "20m", max-file: "5" }
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: autoapply
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: autoapply
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U autoapply -d autoapply"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 20
+    restart: always
+
+  api:
+    <<: *backend
+    command: ["api"]
+    deploy:
+      resources:
+        limits: { cpus: "2", memory: 2g }
+
+  worker:
+    <<: *backend
+    command: ["worker"]
+    healthcheck:
+      test: ["CMD-SHELL", "celery -A app.worker.celery_app inspect ping -d celery@$$HOSTNAME --timeout 10"]
+      interval: 60s
+      timeout: 30s
+      start_period: 30s
+    shm_size: "2gb"
+    depends_on:
+      api:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits: { cpus: "4", memory: 6g }
+
+  beat:
+    <<: *backend
+    command: ["beat"]
+    healthcheck:
+      disable: true
+    depends_on:
+      api:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        BACKEND_URL: http://api:8000
+    environment:
+      BACKEND_URL: http://api:8000
+    image: autoapply-frontend:prod
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: always
+
+  caddy:
+    image: caddy:2-alpine
+    environment:
+      DOMAIN: ${DOMAIN}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - frontend
+      - api
+    restart: always
+
+  # Free local AI model server, only with the "ollama" profile (COMPOSE_PROFILES=ollama in .env).
+  # The app reaches it at http://ollama:11434 on the internal network. Ollama's API has no
+  # authentication: never publish port 11434 on a public server.
+  ollama:
+    image: ollama/ollama
+    profiles: ["ollama"]
+    environment:
+      OLLAMA_KEEP_ALIVE: ${OLLAMA_KEEP_ALIVE:-30m}
+      OLLAMA_NUM_PARALLEL: "1"
+      OLLAMA_CONTEXT_LENGTH: ${OLLAMA_NUM_CTX:-8192}
+    volumes:
+      - ollama-models:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 30s
+      timeout: 10s
+      retries: 20
+    restart: always
+    deploy:
+      resources:
+        limits: { memory: 16g }
+    logging:
+      driver: json-file
+      options: { max-size: "20m", max-file: "3" }
+
+volumes:
+  pgdata:
+  redisdata:
+  storage:
+  caddy_data:
+  caddy_config:
+  ollama-models:

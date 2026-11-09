@@ -1,0 +1,72 @@
+{
+  "noOfJobs": 4,
+  "jobDetails": [
+    {
+      "title": "Python Developer Intern",
+      "jobId": "251020500111",
+      "currency": "INR",
+      "footerPlaceholderLabel": "2 Days Ago",
+      "footerPlaceholderColor": "grey",
+      "companyName": "Acme Analytics",
+      "isSaved": false,
+      "tagsAndSkills": "Python,Django,FastAPI,REST API,SQL",
+      "placeholders": [
+        {"type": "experience", "label": "0-1 Yrs"},
+        {"type": "salary", "label": "Not disclosed"},
+        {"type": "location", "label": "Noida, Delhi / NCR"}
+      ],
+      "companyId": 4471234,
+      "jdURL": "/job-listings-python-developer-intern-acme-analytics-noida-0-to-1-years-251020500111?src=jobsearchDesk&sid=17299&xp=1&px=1",
+      "staticUrl": "acme-analytics-jobs-careers-4471234",
+      "jobDescription": "<ul><li>Build REST APIs in Python and FastAPI.</li><li>Work with our ML team on LLM features.</li></ul>",
+      "createdDate": 1761200000000,
+      "mode": "jp",
+      "board": "1",
+      "logoPathV3": "https://img.naukimg.com/logo_images/groups/v1/4471234.gif",
+      "vacancy": 2
+    },
+    {
+      "title": "AI/ML Intern",
+      "jobId": "251020500222",
+      "footerPlaceholderLabel": "3 Days Ago",
+      "companyName": "Byteforge Labs",
+      "tagsAndSkills": "Machine Learning,Python,Pytorch,LLM",
+      "placeholders": [
+        {"type": "experience", "label": "0-0 Yrs"},
+        {"type": "salary", "label": "10,000-15,000 /month"},
+        {"type": "location", "label": "Remote"}
+      ],
+      "companyId": 5520001,
+      "jdURL": "https://www.naukri.com/job-listings-ai-ml-intern-byteforge-labs-remote-0-to-0-years-251020500222",
+      "jobDescription": "Work on retrieval-augmented generation and agents with Python."
+    },
+    {
+      "title": "Senior Python Developer",
+      "jobId": "251020500333",
+      "footerPlaceholderLabel": "1 Day Ago",
+      "companyName": "Mega Corp",
+      "tagsAndSkills": "Python,Kafka",
+      "placeholders": [
+        {"type": "experience", "label": "5-8 Yrs"},
+        {"type": "salary", "label": "25-35 Lacs PA"},
+        {"type": "location", "label": "Bengaluru"}
+      ],
+      "jdURL": "/job-listings-senior-python-developer-mega-corp-bengaluru-5-to-8-years-251020500333",
+      "jobDescription": "Lead our platform team."
+    },
+    {
+      "title": "Backend Developer Intern",
+      "jobId": "251020500444",
+      "footerPlaceholderLabel": "Just Now",
+      "companyName": "Kite Systems",
+      "tagsAndSkills": "Python,Flask",
+      "placeholders": [
+        {"type": "experience", "label": "0-1 Yrs"},
+        {"type": "location", "label": "Hybrid - Bengaluru"}
+      ],
+      "jobDescription": "No link to this one, so it is skipped."
+    }
+  ],
+  "clusters": {},
+  "fatFooter": {}
+}

@@ -1,0 +1,31 @@
+TASK: GENERIC APPLICATION FORM MAPPING
+
+You are filling an unknown job-application form. For each form field below decide which
+value to enter, using ONLY the candidate data provided. Field ids must be copied exactly.
+
+value_source options:
+- "profile": a direct profile value (first_name, last_name, full_name, email, phone, location,
+  linkedin, github, portfolio, current_company, current_title)
+- "resume_file": the field is a file upload for the resume/CV
+- "cover_letter": the field wants the cover letter (text area or file)
+- "answer": a question you answer (put the answer text in value)
+- "skip": optional field that should stay empty, or a field you cannot fill truthfully
+
+For select/radio fields the value MUST be one of the listed options (copy it exactly).
+If you are unsure, use "skip" and set needs_user_review = true.
+
+<candidate>
+{{candidate_json}}
+</candidate>
+
+<job>
+Company: {{company_name}}
+Role: {{role_title}}
+</job>
+
+<form_fields>
+{{fields_json}}
+</form_fields>
+
+Return ONLY JSON: {"mappings": [{"field_id": "...", "value_source": "profile|resume_file|cover_letter|answer|skip",
+ "profile_key": "", "value": "", "confidence": 0.0, "needs_user_review": false}]}

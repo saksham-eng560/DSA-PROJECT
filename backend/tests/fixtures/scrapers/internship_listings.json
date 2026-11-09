@@ -1,0 +1,19 @@
+[
+  {"source": "Simplify", "category": "Software", "company_name": "Figma", "id": "a1", "title": "Software Engineer Intern",
+   "active": true, "terms": ["Summer 2027"], "date_posted": 4102444800, "date_updated": 4102444800,
+   "url": "https://job-boards.greenhouse.io/figma/jobs/6131089004?utm_source=Simplify&ref=Simplify",
+   "locations": ["San Francisco, CA", "New York, NY"], "company_url": "https://simplify.jobs/c/Figma",
+   "is_visible": true, "sponsorship": "Offers Sponsorship", "degrees": ["Bachelor's"]},
+  {"source": "Simplify", "category": "AI/ML/Data", "company_name": "Ramp", "id": "a2", "title": "Machine Learning Engineering Intern",
+   "active": true, "terms": ["Summer 2027"], "date_posted": 4102358400, "url": "https://jobs.ashbyhq.com/ramp/abc-123/application",
+   "locations": ["Remote in USA"], "is_visible": true, "sponsorship": "Does Not Offer Sponsorship"},
+  {"source": "Simplify", "category": "Software", "company_name": "OldCo", "id": "a3", "title": "Software Engineer Intern",
+   "active": false, "date_posted": 4102358400, "url": "https://jobs.lever.co/oldco/xyz", "locations": ["Austin, TX"], "is_visible": true},
+  {"source": "Simplify", "category": "Product", "company_name": "Notion", "id": "a4", "title": "Product Design Intern",
+   "active": true, "date_posted": 4102358400, "url": "https://jobs.ashbyhq.com/notion/d-1", "locations": ["San Francisco, CA"], "is_visible": true},
+  {"source": "Simplify", "category": "Software", "company_name": "Hidden", "id": "a5", "title": "Software Engineer Intern",
+   "active": true, "date_posted": 4102358400, "url": "https://hidden.example/jobs/1", "locations": [], "is_visible": false},
+  {"source": "vanshb03", "company_name": "Anduril", "id": "a6", "title": "Software Engineer - Summer 2027", "active": true,
+   "season": "Summer", "date_posted": 4102272000, "url": "https://jobs.lever.co/anduril/1234", "locations": ["Costa Mesa, CA"], "is_visible": true},
+  {"company_name": "", "title": "Broken", "url": "notaurl", "active": true, "is_visible": true}
+]

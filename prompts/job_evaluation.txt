@@ -1,0 +1,42 @@
+TASK: JOB MATCH EVALUATION
+
+Evaluate how well this candidate fits the job below. Score each criterion 0-20
+(total max 100) and be calibrated: a 90+ means the candidate meets nearly every
+hard requirement; 50 means roughly half.
+
+1. skills_match       - How many of the REQUIRED skills does the candidate demonstrably have?
+2. experience_match   - Does seniority / years of experience align with the role?
+3. industry_match     - Has the candidate worked in similar domains or products?
+4. location_match     - Does location / remote policy match the candidate's preferences?
+5. compensation_match - Is the (stated or estimated) salary within the candidate's range?
+                        If no salary information is available, score 15.
+
+match_score MUST equal the sum of the five sub-scores.
+proceed_with_application = match_score >= {{threshold}} AND the company is not in
+companies_to_avoid AND no hard requirement is clearly impossible (e.g. mandatory
+security clearance or license the candidate lacks).
+
+missing_skills: required skills from the job description that the candidate does NOT have.
+strong_matches: the candidate's strongest, concrete selling points for this role.
+
+<user_preferences>
+{{user_preferences_json}}
+</user_preferences>
+
+<master_resume>
+{{master_resume_json}}
+</master_resume>
+
+<job>
+Company: {{company_name}}
+Role: {{role_title}}
+Location: {{location}}
+Salary: {{salary}}
+
+{{job_description_text}}
+</job>
+
+Return ONLY the JSON object:
+{"evaluation": {"match_score": int, "skills_match": int, "experience_match": int, "industry_match": int,
+ "location_match": int, "compensation_match": int, "proceed_with_application": bool,
+ "reasoning": "2-3 sentences", "missing_skills": [..], "strong_matches": [..]}}

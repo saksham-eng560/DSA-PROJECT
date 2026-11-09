@@ -1,0 +1,32 @@
+TASK: COVER LETTER GENERATION
+
+Write a cover letter for {{candidate_name}} applying to the {{role_title}} role at {{company_name}}.
+
+Structure:
+- Paragraph 1 (Hook): Express genuine interest in {{company_name}} and the {{role_title}} role.
+  Reference something specific about the company taken from the job description.
+- Paragraph 2 (Value Prop): Connect the candidate's top 2-3 achievements directly to the job
+  requirements. Use metrics only when they appear in the resume.
+- Paragraph 3 (Cultural Fit + CTA): Show alignment with the company's values/mission and
+  express enthusiasm for next steps.
+
+Tone: match the company culture detected from the job description (formal for banking/law,
+innovative for startups, balanced for big tech).
+Length: 200-300 words. Plain text, no placeholders like [Company], no markdown.
+Start with "Dear Hiring Team," (or the hiring manager's name if the job description gives it)
+and end with "Sincerely,\n{{candidate_name}}".
+Do NOT claim any experience, skill or credential that is not in the resume.
+
+<job>
+{{job_description_text}}
+</job>
+
+<resume>
+{{resume_json}}
+</resume>
+
+<company_research>
+{{company_research}}
+</company_research>
+
+Return ONLY JSON: {"cover_letter": "...", "tone": "formal|balanced|innovative", "word_count": int}

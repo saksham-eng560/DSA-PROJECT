@@ -1,0 +1,73 @@
+{
+  "0-legal-notice": "Remotive API Legal Notice: link back to Remotive and mention it as the source.",
+  "job-count": 5,
+  "total-job-count": 5,
+  "jobs": [
+    {
+      "id": 1900001,
+      "url": "https://remotive.com/remote-jobs/software-dev/machine-learning-intern-1900001",
+      "title": "Machine Learning Intern",
+      "company_name": "OpenOrbit",
+      "company_logo": "https://remotive.com/job/1900001/logo",
+      "category": "Software Development",
+      "tags": ["python", "pytorch", "llm"],
+      "job_type": "internship",
+      "publication_date": "2026-10-21T08:00:00",
+      "candidate_required_location": "Worldwide",
+      "salary": "",
+      "description": "<p>Train and evaluate LLM-based agents in Python. Fully remote.</p>"
+    },
+    {
+      "id": 1900002,
+      "url": "https://remotive.com/remote-jobs/software-dev/senior-backend-engineer-1900002",
+      "title": "Senior Backend Engineer",
+      "company_name": "BigCo",
+      "category": "Software Development",
+      "tags": ["python"],
+      "job_type": "full_time",
+      "publication_date": "2026-10-20T08:00:00",
+      "candidate_required_location": "Worldwide",
+      "salary": "$150k - $180k",
+      "description": "<p>Lead our platform team.</p>"
+    },
+    {
+      "id": 1900003,
+      "url": "https://remotive.com/remote-jobs/software-dev/python-developer-intern-1900003",
+      "title": "Python Developer Intern",
+      "company_name": "StateSide",
+      "category": "Software Development",
+      "tags": ["python"],
+      "job_type": "internship",
+      "publication_date": "2026-10-20T08:00:00",
+      "candidate_required_location": "USA Only",
+      "salary": "",
+      "description": "<p>US residents only.</p>"
+    },
+    {
+      "id": 1900004,
+      "url": "https://remotive.com/remote-jobs/software-dev/junior-python-developer-1900004",
+      "title": "Junior Python Developer",
+      "company_name": "AsiaSoft",
+      "category": "Software Development",
+      "tags": ["python", "django"],
+      "job_type": "full_time",
+      "publication_date": "2026-10-19T08:00:00",
+      "candidate_required_location": "APAC",
+      "salary": "",
+      "description": "<p>Django and FastAPI services.</p>"
+    },
+    {
+      "id": 1900005,
+      "url": "https://remotive.com/remote-jobs/software-dev/backend-intern-1900005",
+      "title": "Backend Intern",
+      "company_name": "IndiaFirst",
+      "category": "Software Development",
+      "tags": ["python", "fastapi"],
+      "job_type": "internship",
+      "publication_date": "2026-10-22T08:00:00",
+      "candidate_required_location": "India",
+      "salary": "",
+      "description": "<p>FastAPI and PostgreSQL. Open to students in India.</p>"
+    }
+  ]
+}

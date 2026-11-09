@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * AutoApply design tokens — "ink" (dark, default) and "paper" (light).
+ * Charcoal surfaces, warm cream type, one signal red, hairline grid lines, square corners.
+ */
+@layer base {
+  :root {
+    --background: 30 22% 94%;
+    --foreground: 0 6% 11%;
+    --card: 30 30% 97%;
+    --card-foreground: 0 6% 11%;
+    --popover: 30 30% 97%;
+    --popover-foreground: 0 6% 11%;
+    --primary: 356 75% 48%;
+    --primary-foreground: 0 100% 99%;
+    --secondary: 30 14% 88%;
+    --secondary-foreground: 0 6% 14%;
+    --muted: 30 14% 89%;
+    --muted-foreground: 0 4% 36%;
+    --accent: 30 16% 88%;
+    --accent-foreground: 0 6% 11%;
+    --destructive: 356 75% 46%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 152 52% 30%;
+    --success-foreground: 0 0% 100%;
+    --warning: 30 90% 34%;
+    --warning-foreground: 0 0% 100%;
+    --info: 205 60% 38%;
+    --info-foreground: 0 0% 100%;
+    --border: 20 8% 78%;
+    --line: 0 5% 62%;
+    --input: 20 8% 70%;
+    --ring: 356 75% 48%;
+    --radius: 0rem;
+    --noise-opacity: 0.05;
+    /* Chart tokens */
+    --series-1: #2b2727;
+    --series-2: #d52b37;
+    --series-3: #3f8f74;
+    --chart-grid: #ddd5cc;
+    --chart-axis: #c3b9ae;
+    --chart-muted: #6f6767;
+  }
+  .dark {
+    --background: 0 4% 11%;
+    --foreground: 0 22% 94%;
+    --card: 0 4% 12.5%;
+    --card-foreground: 0 22% 94%;
+    --popover: 0 4% 13%;
+    --popover-foreground: 0 22% 94%;
+    --primary: 356 75% 53%;
+    --primary-foreground: 0 100% 99%;
+    --secondary: 0 4% 17%;
+    --secondary-foreground: 0 18% 92%;
+    --muted: 0 4% 16%;
+    --muted-foreground: 0 6% 64%;
+    --accent: 0 4% 17%;
+    --accent-foreground: 0 22% 94%;
+    --destructive: 356 75% 53%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 152 45% 52%;
+    --success-foreground: 0 5% 10%;
+    --warning: 38 92% 60%;
+    --warning-foreground: 0 5% 10%;
+    --info: 205 70% 66%;
+    --info-foreground: 0 5% 10%;
+    --border: 0 3% 26%;
+    --line: 0 5% 44%;
+    --input: 0 3% 32%;
+    --ring: 356 75% 53%;
+    --noise-opacity: 0.07;
+    --series-1: #efe6e1;
+    --series-2: #ee4450;
+    --series-3: #7fb8a4;
+    --chart-grid: #2e2a2a;
+    --chart-axis: #3d3838;
+    --chart-muted: #9d9595;
+  }
+  * {
+    @apply border-border;
+  }
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "ss02";
+  }
+  ::selection {
+    @apply bg-primary text-primary-foreground;
+  }
+}
+
+@layer components {
+  /* Film-grain overlay like printed matter; sits under content, never catches clicks. */
+  .noise::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: var(--noise-opacity);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.2 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+  .noise > * {
+    position: relative;
+    z-index: 1;
+  }
+  .label-caps {
+    @apply text-[11px] font-medium uppercase tracking-label;
+  }
+  .display {
+    @apply font-display uppercase leading-[0.95];
+  }
+  /* Red brush strokes behind a headline (see the landing hero). */
+  .brush {
+    position: relative;
+    isolation: isolate;
+  }
+  .brush::before,
+  .brush::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: hsl(var(--primary));
+    transform: skewY(-9deg) rotate(-8deg);
+  }
+  .brush::before {
+    left: -3%;
+    right: 2%;
+    top: 36%;
+    height: 24%;
+  }
+  .brush::after {
+    left: -12%;
+    right: 34%;
+    top: 84%;
+    height: 21%;
+  }
+  .tag-pill {
+    @apply inline-flex items-center rounded-full border border-foreground/70 bg-background px-4 py-1.5 text-sm text-foreground;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+  .prose-pre {
+    @apply whitespace-pre-wrap break-words text-sm leading-relaxed;
+  }
+  .grid-lines {
+    /* 1px separators between grid cells: give the grid a line-colored background and gap-px */
+    @apply gap-px bg-border;
+  }
+  .grid-lines > * {
+    @apply bg-background;
+  }
+}

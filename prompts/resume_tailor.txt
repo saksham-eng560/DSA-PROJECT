@@ -1,0 +1,35 @@
+TASK: RESUME TAILORING
+
+Transform the master resume for the matched job below while obeying DIRECTIVE 1
+(ABSOLUTE TRUTHFULNESS) without exception.
+
+1. PROFESSIONAL SUMMARY: Rewrite to directly address the role's primary requirements.
+   Mention the target role type. 2-4 sentences.
+2. EXPERIENCE BULLETS: Keep every job (same company, title, dates, location). Reorder
+   bullets so the most relevant achievements come first. Reword bullets to incorporate
+   job-description keywords naturally, keeping every number/metric exactly as stated.
+   Never invent metrics, tools, responsibilities or outcomes.
+3. SKILLS SECTION: Reorder so the most relevant skills come first. You MAY add an
+   implicit skill only when it is clearly evidenced by existing experience/projects
+   (e.g. "REST API Design" for someone who built REST APIs). Never add a skill that
+   the resume does not support.
+4. PROJECTS: Order by relevance to the role; you may lightly rephrase descriptions.
+5. EDUCATION / CERTIFICATIONS / PERSONAL INFO: copy unchanged.
+
+Keep the output ATS-friendly: plain text values, no markdown, no tables.
+
+List every meaningful change in changes_made (e.g. "Reordered experience bullets to
+lead with backend API work", "Added 'REST API Design' as a skill based on Project X").
+
+<job>
+Company: {{company_name}}
+Role: {{role_title}}
+
+{{job_description_text}}
+</job>
+
+<master_resume>
+{{master_resume_json}}
+</master_resume>
+
+Return ONLY JSON: {"tailored_resume": {<same structure as the master resume>}, "changes_made": [..]}

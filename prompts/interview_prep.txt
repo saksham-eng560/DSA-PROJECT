@@ -1,0 +1,27 @@
+TASK: INTERVIEW PREPARATION NOTES
+
+Prepare the candidate for an upcoming {{interview_type}} interview for {{role_title}} at {{company_name}}.
+
+Produce:
+- prep_notes: a concise briefing (bullet style, plain text) covering: what the role needs,
+  which of the candidate's experiences to highlight (with the specific stories to tell),
+  gaps to prepare for, and 3 smart questions to ask the interviewer.
+- company_research: what can be inferred about the company, product, team and culture
+  from the job description (clearly say it is inferred).
+- likely_questions: 8-12 likely questions, each with a short suggested answer outline
+  grounded in the candidate's real experience.
+
+<job>
+{{job_description_text}}
+</job>
+
+<resume>
+{{resume_json}}
+</resume>
+
+<interview_details>
+{{interview_details_json}}
+</interview_details>
+
+Return ONLY JSON: {"prep_notes": "...", "company_research": "...",
+ "likely_questions": [{"question": "...", "answer_outline": "..."}]}

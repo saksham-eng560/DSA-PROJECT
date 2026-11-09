@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+*.pem
+
+# App data
+backend/data/
+data/
+*.sqlite3
+*.db
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Build artifacts
+extension/dist/
+*.zip
+
+# Runtime state
+dump.rdb
+celerybeat-schedule*
+logs/

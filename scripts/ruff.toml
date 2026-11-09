@@ -1,0 +1,7 @@
+extend = "../backend/ruff.toml"
+
+[lint.isort]
+known-first-party = ["app", "tests"]
+
+[lint.per-file-ignores]
+"*.py" = ["E402", "S", "E501"]

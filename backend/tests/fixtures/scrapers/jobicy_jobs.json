@@ -1,0 +1,55 @@
+{
+  "apiVersion": "2",
+  "documentationUrl": "https://jobicy.com/jobs-rss-feed",
+  "friendlyNotice": "Please link back to Jobicy and do not poll the API too often.",
+  "jobCount": 3,
+  "xRayHash": "abc123",
+  "clientKey": "public",
+  "lastUpdate": "2026-10-22 10:00:00",
+  "jobs": [
+    {
+      "id": 120001,
+      "url": "https://jobicy.com/jobs/120001-ai-engineer-intern",
+      "jobSlug": "120001-ai-engineer-intern",
+      "jobTitle": "AI Engineer Intern",
+      "companyName": "Lumen AI",
+      "companyLogo": "https://jobicy.com/data/server-nyc0409/galaxy/mercury/2026/10/lumen.png",
+      "jobIndustry": ["Programming"],
+      "jobType": ["internship"],
+      "jobGeo": "Anywhere",
+      "jobLevel": "Any",
+      "jobExcerpt": "Build RAG pipelines and AI agents.",
+      "jobDescription": "<p>Build RAG pipelines and AI agents in Python with LangChain.</p>",
+      "pubDate": "2026-10-21 09:00:00"
+    },
+    {
+      "id": 120002,
+      "url": "https://jobicy.com/jobs/120002-python-developer",
+      "jobTitle": "Python Developer",
+      "companyName": "Midweight Co",
+      "jobIndustry": ["Programming"],
+      "jobType": ["full-time"],
+      "jobGeo": "EMEA",
+      "jobLevel": "Midweight",
+      "jobExcerpt": "Python services.",
+      "jobDescription": "<p>Python services.</p>",
+      "pubDate": "2026-10-20 09:00:00",
+      "annualSalaryMin": 60000,
+      "annualSalaryMax": 80000,
+      "salaryCurrency": "EUR"
+    },
+    {
+      "id": 120003,
+      "url": "https://jobicy.com/jobs/120003-backend-developer-intern",
+      "jobTitle": "Backend Developer Intern",
+      "companyName": "Canuck Inc",
+      "jobIndustry": ["Programming"],
+      "jobType": ["internship"],
+      "jobGeo": "Canada",
+      "jobLevel": "Entry",
+      "jobExcerpt": "Canada only.",
+      "jobDescription": "<p>Canada only.</p>",
+      "pubDate": "2026-10-20 09:00:00"
+    }
+  ]
+}

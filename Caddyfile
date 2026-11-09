@@ -1,0 +1,25 @@
+# TLS certificates are issued automatically by Caddy (Let's Encrypt).
+{$DOMAIN} {
+	encode zstd gzip
+
+	# API + WebSocket go straight to FastAPI (same origin => first-party session cookie)
+	handle /api/v1/* {
+		reverse_proxy api:8000
+	}
+	handle /docs* {
+		reverse_proxy api:8000
+	}
+	handle /health* {
+		reverse_proxy api:8000
+	}
+
+	# Everything else is the Next.js dashboard
+	handle {
+		reverse_proxy frontend:3000
+	}
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		-Server
+	}
+}

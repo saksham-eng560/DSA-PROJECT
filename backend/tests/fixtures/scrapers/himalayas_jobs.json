@@ -1,0 +1,48 @@
+{
+  "comments": "Himalayas remote jobs API. Please link back to the job on Himalayas.",
+  "updatedAt": 1761300000,
+  "offset": 0,
+  "limit": 20,
+  "totalCount": 2,
+  "jobs": [
+    {
+      "title": "Software Engineer Intern",
+      "excerpt": "Python and FastAPI services for our developer platform.",
+      "companyName": "Cloudnest",
+      "companySlug": "cloudnest",
+      "companyLogo": "https://cdn-images.himalayas.app/cloudnest.png",
+      "employmentType": "Intern",
+      "minSalary": null,
+      "maxSalary": null,
+      "seniority": ["Entry-level"],
+      "currency": "USD",
+      "locationRestrictions": ["India", "Singapore"],
+      "timezoneRestrictions": [5.5, 8],
+      "categories": ["Software-Engineering", "Python"],
+      "parentCategories": ["Engineering"],
+      "description": "<p>Build Python and FastAPI services. Students in India and Singapore welcome.</p>",
+      "pubDate": 1761200000,
+      "expiryDate": 4102444800,
+      "applicationLink": "https://jobs.lever.co/cloudnest/7b1f0c2e-1111-2222-3333-444455556666",
+      "guid": "https://himalayas.app/companies/cloudnest/jobs/software-engineer-intern"
+    },
+    {
+      "title": "Data Engineer",
+      "excerpt": "Spark pipelines.",
+      "companyName": "Euro GmbH",
+      "companySlug": "euro-gmbh",
+      "employmentType": "Full Time",
+      "minSalary": 70000,
+      "maxSalary": 90000,
+      "seniority": ["Mid-level"],
+      "currency": "EUR",
+      "locationRestrictions": ["Germany"],
+      "categories": ["Data-Engineering"],
+      "description": "<p>Spark pipelines.</p>",
+      "pubDate": 1761100000,
+      "expiryDate": 4102444800,
+      "applicationLink": "https://euro.example/jobs/9",
+      "guid": "https://himalayas.app/companies/euro-gmbh/jobs/data-engineer"
+    }
+  ]
+}
