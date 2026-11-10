@@ -5,7 +5,7 @@ import uuid
 from datetime import datetime
 from typing import TYPE_CHECKING, Any
 
-from sqlalchemy import Boolean, ForeignKey, String, Text, UniqueConstraint, Uuid, false
+from sqlalchemy import Boolean, ForeignKey, Index, String, Text, UniqueConstraint, Uuid, false
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base, JSONType, UTCDateTime, utcnow
@@ -202,6 +202,7 @@ class UserFieldMapping(Base):
 
 class Notification(Base):
     __tablename__ = "notifications"
+    __table_args__ = (Index("idx_notifications_user_unread", "user_id", "is_read", "created_at"),)  # the bell's unread count
 
     id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
     user_id: Mapped[uuid.UUID] = mapped_column(Uuid, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)

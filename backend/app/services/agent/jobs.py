@@ -10,6 +10,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.database import checkpoint
+from app.dsa.bloom_filter import BloomFilter
 from app.models.application import Application
 from app.models.enums import STATUS_RANK, ApplicationStatus, ATSPlatform
 from app.models.job import Job
@@ -45,8 +46,46 @@ def resume_embedding(db: Session, resume: Resume) -> list[float]:
 
 
 # --------------------------------------------------------------------------- postings
-def upsert_job(db: Session, scraped: ScrapedJob) -> tuple[Job, bool]:
-    """Insert or refresh a job. Returns (job, created)."""
+class SeenPostings:
+    """A Bloom filter over the duplicate key of every active posting, built once per scan.
+
+    ``upsert_job`` asks it before running the "is this the same job from another site?" query. A
+    Bloom filter never says "no" wrongly, so "no" lets the query be skipped for a posting that is
+    certainly new; "maybe" still runs the exact query, so a false positive costs one query and
+    never drops a job. Postings saved by another process while this scan runs are not in the
+    filter; the unique index on ``source_url`` still stops the same listing being stored twice.
+    """
+
+    def __init__(self, keys: list[str], room: int = 5000) -> None:
+        self.filter = BloomFilter(expected_items=len(keys) + room, false_positive_rate=0.01, items=keys)
+        self.skipped = 0  # exact queries avoided ("definitely new")
+        self.checked = 0  # exact queries still run ("maybe seen")
+
+    @classmethod
+    def load(cls, db: Session) -> SeenPostings:
+        keys = db.scalars(select(Job.dedupe_key).where(Job.is_active.is_(True), Job.dedupe_key.is_not(None))).all()
+        return cls([key for key in keys if key])
+
+    def maybe_seen(self, key: str) -> bool:
+        hit = key in self.filter
+        if hit:
+            self.checked += 1
+        else:
+            self.skipped += 1
+        return hit
+
+    def add(self, key: str) -> None:
+        self.filter.add(key)
+
+    def summary(self) -> str:
+        stats = self.filter.stats()
+        return (f"Bloom filter ({stats['bytes']:,} bytes for {stats['items']:,} postings) answered \"certainly new\" for "
+                f"{self.skipped} postings, saving that many duplicate-check queries; {self.checked} were checked exactly")
+
+
+def upsert_job(db: Session, scraped: ScrapedJob, seen: SeenPostings | None = None) -> tuple[Job, bool]:
+    """Insert or refresh a job. Returns (job, created). ``seen`` (a scan's Bloom filter) lets the
+    cross-site duplicate query be skipped for postings that are certainly new."""
     job = db.scalar(select(Job).where(Job.source_url == scraped.source_url))
     now = datetime.now(UTC)
     if job is not None:
@@ -58,10 +97,13 @@ def upsert_job(db: Session, scraped: ScrapedJob) -> tuple[Job, bool]:
             apply_company_check(job)
         return job, False
     key = dedupe_key(scraped.company_name, scraped.role_title, scraped.location)
-    duplicate = db.scalar(select(Job).where(Job.dedupe_key == key, Job.is_active.is_(True)))
-    if duplicate is not None:
-        duplicate.last_checked = now
-        return duplicate, False
+    if seen is None or seen.maybe_seen(key):
+        duplicate = db.scalar(select(Job).where(Job.dedupe_key == key, Job.is_active.is_(True)))
+        if duplicate is not None:
+            duplicate.last_checked = now
+            return duplicate, False
+    if seen is not None:
+        seen.add(key)
     job = Job(
         company_name=scraped.company_name,
         company_logo_url=scraped.company_logo_url,

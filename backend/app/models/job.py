@@ -19,6 +19,7 @@ class Job(Base):
         Index("idx_jobs_dedupe", "dedupe_key"),
         Index("idx_jobs_company_tier", "company_tier"),
         Index("idx_jobs_company_verdict", "company_verdict"),
+        Index("idx_jobs_discovered_at", "discovered_at"),  # "newest first" lists and the search index build
     )
 
     id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)

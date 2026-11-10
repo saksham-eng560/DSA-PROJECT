@@ -229,3 +229,9 @@ def _add_missing_sqlite_columns() -> None:
                     ddl += f" NOT NULL DEFAULT {default_sql}" if not column.nullable else f" DEFAULT {default_sql}"
                 conn.execute(text(ddl))
                 logger.info("Added column %s.%s", table.name, column.name)
+            # ...and the indexes (``create_all`` only creates indexes together with a new table).
+            present = {index["name"] for index in inspector.get_indexes(table.name)}
+            for index in table.indexes:
+                if index.name and index.name not in present:
+                    index.create(bind=conn, checkfirst=True)
+                    logger.info("Added index %s on %s", index.name, table.name)

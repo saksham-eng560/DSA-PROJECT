@@ -2,13 +2,17 @@
 
 from __future__ import annotations
 
+import logging
 from datetime import UTC, datetime
 
 from sqlalchemy.orm import Session
 
 from app.models.application import Application, ApplicationStatusHistory
 from app.models.enums import RESPONSE_STATUSES, STATUS_RANK, ApplicationStatus
+from app.services import state_machine
 from app.services.notifier import publish_after_commit
+
+logger = logging.getLogger(__name__)
 
 
 def set_status(
@@ -25,6 +29,10 @@ def set_status(
         return False
     if only_forward and STATUS_RANK.get(new_status, 0) < STATUS_RANK.get(old, 0):
         return False
+    if not state_machine.is_expected(old, new_status):
+        # Not an edge of the lifecycle graph (a manual edit, an out-of-order e-mail): allowed, but worth a trace.
+        logger.info("Unusual status change %s -> %s for application %s (by %s)",
+                    old.value if old else None, new_status.value, application.id, changed_by)
     now = datetime.now(UTC)
     application.status = new_status
     application.updated_at = now

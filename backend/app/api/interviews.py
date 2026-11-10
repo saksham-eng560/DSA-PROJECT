@@ -17,6 +17,7 @@ from app.services.agent_orchestrator import get_master_resume
 from app.services.application_service import set_status
 from app.services.calendar_manager import delete_calendar_event, generate_prep, upsert_calendar_event
 from app.services.email_parser import meeting_platform
+from app.services.insights import conflicts_for
 
 router = APIRouter(prefix="/interviews", tags=["interviews"])
 
@@ -76,7 +77,9 @@ def create_interview(body: InterviewCreate, user: CurrentUser, db: DB) -> dict:
     interview.likely_questions = prep.get("likely_questions")
     upsert_calendar_event(db, user, app, interview)
     set_status(db, app, ApplicationStatus.INTERVIEW, "user", "Interview added", only_forward=True)
-    return interview_out(interview)
+    # Interval sweep over your other interviews: the dashboard warns when this one overlaps another.
+    clashes = conflicts_for(db, user, interview.scheduled_at, interview.duration_minutes, ignore_id=interview.id)
+    return {**interview_out(interview), "conflicts": clashes}
 
 
 @router.patch("/{interview_id}")
@@ -97,7 +100,8 @@ def update_interview(interview_id: str, body: InterviewUpdate, user: CurrentUser
         interview.reminder_1h_sent = False
     if reschedule or "prep_notes" in data:
         upsert_calendar_event(db, user, interview.application, interview)
-    return interview_out(interview)
+    clashes = conflicts_for(db, user, interview.scheduled_at, interview.duration_minutes, ignore_id=interview.id)
+    return {**interview_out(interview), "conflicts": clashes}
 
 
 @router.post("/{interview_id}/prep")

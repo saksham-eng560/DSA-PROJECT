@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 from app.core.storage import get_storage, user_prefix
 from app.models.agent_run import AgentRun
 from app.models.application import Application
+from app.models.chat import ChatSession
 from app.models.communication import Communication
 from app.models.interview import Interview
 from app.models.resume import Resume
@@ -64,6 +65,10 @@ def export_user_data(db: Session, user: User) -> dict[str, Any]:
         "interviews": [_row(i) for i in db.scalars(select(Interview).where(Interview.application_id.in_(app_ids))).all()] if app_ids else [],
         "agent_runs": [_row(r) for r in db.scalars(select(AgentRun).where(AgentRun.user_id == user.id)).all()],
         "notifications": [_row(n) for n in db.scalars(select(Notification).where(Notification.user_id == user.id)).all()],
+        "copilot_conversations": [
+            {**_row(s), "messages": [_row(m, {"session_id"}) for m in s.messages]}
+            for s in db.scalars(select(ChatSession).where(ChatSession.user_id == user.id)).all()
+        ],
     }
 
 
@@ -83,6 +88,8 @@ def delete_user_data(db: Session, user: User) -> None:
             db.delete(interview)
     for comm in db.scalars(select(Communication).where(Communication.user_id == user.id)).all():
         db.delete(comm)
+    for chat in db.scalars(select(ChatSession).where(ChatSession.user_id == user.id)).all():
+        db.delete(chat)  # its messages go with it (cascade)
     db.flush()
     # Applications reference tailored resumes; delete them before resumes.
     for app in db.scalars(select(Application).where(Application.user_id == user.id)).all():

@@ -9,7 +9,7 @@ from typing import Any
 
 from app.models.job import Job
 from app.schemas.resume_content import ResumeContent
-from app.services import llm_schemas
+from app.services import llm_schemas, skill_graph
 from app.services.duration_fit import duration_reasons
 from app.services.intern_level import intern_level_reasons, internships_only
 from app.services.llm import LLMError, get_llm, render_prompt
@@ -359,10 +359,21 @@ def evaluate_match(
     llm = get_llm()
     if use_llm and llm.available:
         try:
-            return llm_evaluation(resume_content, job, prefs, threshold)
+            return with_transferable(llm_evaluation(resume_content, job, prefs, threshold), resume_content)
         except LLMError as exc:
             logger.warning("LLM job evaluation failed for %s; using heuristic: %s", job.id, exc)
-    return heuristic_evaluation(resume_content, job, prefs, threshold)
+    return with_transferable(heuristic_evaluation(resume_content, job, prefs, threshold), resume_content)
+
+
+def with_transferable(evaluation: dict[str, Any], resume_content: dict[str, Any]) -> dict[str, Any]:
+    """Add ``transferable_skills``: missing skills joined to one you have by a cheap edge of the skill graph
+    ("Flask" when you know FastAPI). The score is unchanged; the card shows them as "close" instead of missing."""
+    try:
+        have = resume_skill_set(ResumeContent.model_validate(resume_content))
+        evaluation["transferable_skills"] = skill_graph.transferable(have, evaluation.get("missing_skills") or [])[:6]
+    except ValueError:  # an unreadable resume must never cost the evaluation itself
+        evaluation["transferable_skills"] = []
+    return evaluation
 
 
 def priority_key(match_score: int | None, deadline: date | None) -> tuple[int, date]:

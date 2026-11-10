@@ -63,15 +63,20 @@ def compute_overview(db: Session, user: User, days: int | None = None) -> dict[s
     histogram = [{"range": f"{i * 10}-{i * 10 + 9 if i < 9 else 100}", "count": c} for i, c in enumerate(buckets)]
 
     # Platform effectiveness
+    # Membership is tested against hash sets of ids: O(1) each. Testing against the lists above made
+    # this loop O(n^2), which showed once an account held a few thousand applications.
+    submitted_ids = {a.id for a in submitted}
+    interviewed_ids = {a.id for a in interviewed}
+    responded_ids = {a.id for a in responded}
     platform: dict[str, dict[str, int]] = defaultdict(lambda: {"discovered": 0, "applied": 0, "responses": 0, "interviews": 0})
     for a in apps:
         key = a.job.source_platform.value if a.job else "unknown"
         platform[key]["discovered"] += 1
-        if a in submitted:
+        if a.id in submitted_ids:
             platform[key]["applied"] += 1
-        if a in responded:
+        if a.id in responded_ids:
             platform[key]["responses"] += 1
-        if a in interviewed:
+        if a.id in interviewed_ids:
             platform[key]["interviews"] += 1
     platforms = [
         {"platform": k, **v, "response_rate": _pct(v["responses"], v["applied"]), "interview_rate": _pct(v["interviews"], v["applied"])}
@@ -80,8 +85,6 @@ def compute_overview(db: Session, user: User, days: int | None = None) -> dict[s
 
     # Keywords correlated with callbacks (lift of skill frequency among interviewed vs all submitted)
     # A "positive outcome" is reaching an interview stage or a non-rejection response.
-    interviewed_ids = {a.id for a in interviewed}
-    responded_ids = {a.id for a in responded}
     positive_ids = {a.id for a in submitted
                     if a.id in interviewed_ids or (a.id in responded_ids and a.status != ApplicationStatus.REJECTED)}
     all_skills: Counter[str] = Counter()

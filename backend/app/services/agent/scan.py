@@ -22,6 +22,7 @@ from app.models.user import User
 from app.scrapers import SCRAPERS, ScraperError, SearchQuery, fetch_job_from_url
 from app.services.agent.discovery import discover_jobs, scan_platforms, select_postings
 from app.services.agent.jobs import (
+    SeenPostings,
     backfill_company_checks,
     embed_jobs,
     ensure_application,
@@ -74,10 +75,11 @@ def run_scan(db: Session, user: User, trigger: str = "user", platforms: list[str
         new_apps: list[Application] = []
         found_again: list[Application] = []
         jobs: list[Job] = []
+        seen = SeenPostings.load(db)  # Bloom filter: "certainly new" postings skip the duplicate query
         for idx, sj in enumerate(scraped):
             try:
                 with db.begin_nested():
-                    job, _created = upsert_job(db, sj)
+                    job, _created = upsert_job(db, sj, seen)
                     app, created = ensure_application(db, user, job)
             except Exception as exc:  # noqa: BLE001
                 run.log(f"Could not store job {sj.source_url}: {exc}", level="error")
@@ -93,6 +95,8 @@ def run_scan(db: Session, user: User, trigger: str = "user", platforms: list[str
                 progress.tick()
         run.run.jobs_discovered = len(new_apps)
         run.log(f"Discovered {len(scraped)} postings, {len(new_apps)} new for you")
+        if scraped:
+            run.log(seen.summary())
         backfill_company_checks(db)
         progress.set_phase("saving", "Checking the companies behind the new postings")
         verify_companies(db, [a.job for a in new_apps], run, progress)

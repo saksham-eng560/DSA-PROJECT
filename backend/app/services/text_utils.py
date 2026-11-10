@@ -9,6 +9,8 @@ from collections.abc import Iterable
 
 from bs4 import BeautifulSoup
 
+from app.dsa.strings import AhoCorasick
+
 STOPWORDS = frozenset(
     """a an and are as at be by for from has have in is it its of on or our that the their this to we
     will with you your they them who what when where which while about into over under more most such
@@ -110,16 +112,52 @@ def _skill_pattern(skill: str) -> re.Pattern[str]:
 
 
 _PATTERNS = {s: _skill_pattern(s) for s in SKILL_VOCABULARY}
+_SINGLE_LETTER = {s: re.compile(rf"(?<![a-z0-9]){s}(?:\s+programming|\s+language|,|/)") for s in _PATTERNS if len(s) == 1}
+
+# One Aho-Corasick automaton over the whole vocabulary: a posting is read once to find every skill in
+# it, instead of once per skill (~250 regular-expression scans). See app/dsa/strings.py.
+_AUTOMATON = AhoCorasick(s for s in _PATTERNS if len(s) > 1)
+_SKILL_CHARS = frozenset("abcdefghijklmnopqrstuvwxyz0123456789+#")
+
+
+def _skills_present(norm: str) -> set[str]:
+    """Vocabulary entries that occur in ``norm`` as whole terms ("java" is not found inside "javascript")."""
+    present: set[str] = set()
+    for start, end, skill in _AUTOMATON.finditer(norm):
+        if skill not in present and (start == 0 or norm[start - 1] not in _SKILL_CHARS) \
+                and (end == len(norm) or norm[end] not in _SKILL_CHARS):
+            present.add(skill)
+    return present
 
 
 def extract_skills(text: str, extra_vocabulary: Iterable[str] = ()) -> list[str]:
     """Return canonical skills mentioned in ``text`` (vocabulary + caller-provided skills)."""
     norm = normalize_text(text)
+    present = _skills_present(norm)
+    found: list[str] = []
+    seen: set[str] = set()
+    for skill in _PATTERNS:  # vocabulary order, so the result is stable
+        if len(skill) == 1:  # "c" / "r" only count when written as a standalone language mention
+            if not _SINGLE_LETTER[skill].search(norm):
+                continue
+        elif skill not in present:
+            continue
+        canon = canonical_skill(skill)
+        if canon not in seen:
+            seen.add(canon)
+            found.append(canon)
+    return _with_extra(norm, found, seen, extra_vocabulary)
+
+
+def extract_skills_regex(text: str, extra_vocabulary: Iterable[str] = ()) -> list[str]:
+    """The original implementation: one regular expression per skill. Kept as the reference that
+    ``extract_skills`` is tested against, and as the baseline in the DSA Lab benchmark."""
+    norm = normalize_text(text)
     found: list[str] = []
     seen: set[str] = set()
     for skill, pattern in _PATTERNS.items():
-        if len(skill) == 1:  # "c" / "r" only count when written as a standalone language mention
-            if not re.search(rf"(?<![a-z0-9]){skill}(?:\s+programming|\s+language|,|/)", norm):
+        if len(skill) == 1:
+            if not _SINGLE_LETTER[skill].search(norm):
                 continue
         elif not pattern.search(norm):
             continue
@@ -127,6 +165,10 @@ def extract_skills(text: str, extra_vocabulary: Iterable[str] = ()) -> list[str]
         if canon not in seen:
             seen.add(canon)
             found.append(canon)
+    return _with_extra(norm, found, seen, extra_vocabulary)
+
+
+def _with_extra(norm: str, found: list[str], seen: set[str], extra_vocabulary: Iterable[str]) -> list[str]:
     for skill in extra_vocabulary:
         canon = canonical_skill(skill)
         if canon and canon not in seen and _skill_pattern(normalize_text(skill)).search(norm):

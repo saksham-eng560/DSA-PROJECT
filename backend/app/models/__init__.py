@@ -1,5 +1,6 @@
 from app.models.agent_run import AgentRun
 from app.models.application import Application, ApplicationStatusHistory
+from app.models.chat import ChatMessage, ChatSession
 from app.models.communication import Communication
 from app.models.enums import (
     ApplicationStatus,
@@ -21,6 +22,8 @@ __all__ = [
     "Application",
     "ApplicationStatus",
     "ApplicationStatusHistory",
+    "ChatMessage",
+    "ChatSession",
     "Communication",
     "EmailDirection",
     "EmailIntent",

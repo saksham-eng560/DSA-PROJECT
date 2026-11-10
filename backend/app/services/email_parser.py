@@ -12,7 +12,7 @@ from zoneinfo import ZoneInfo
 from dateutil import parser as dateparser
 
 from app.models.enums import ApplicationStatus, EmailIntent
-from app.services import llm_schemas
+from app.services import email_intent, llm_schemas
 from app.services.llm import LLMError, get_llm, render_prompt
 from app.services.text_utils import normalize_company, normalize_text, truncate
 
@@ -191,6 +191,12 @@ def heuristic_parse(msg: EmailMessage, applications: list[dict[str, Any]], candi
     # "Unfortunately" in an interview-rescheduling mail is not a rejection
     if intent == "rejection" and re.search(r"reschedul|another time|new time", text):
         intent, confidence = "interview_invite", 0.5
+    # No rule matched: ask the Naive Bayes classifier, which generalises to wording nobody listed.
+    learned_probability: float | None = None
+    if intent == "generic":
+        label, probability = email_intent.classify(f"{msg.subject}\n{msg.body}")
+        if label != "generic" and probability >= email_intent.MIN_CONFIDENCE:
+            intent, confidence, learned_probability = label, min(0.85, round(probability * 0.85, 2)), probability
 
     link_match = MEETING_LINK.search(msg.body or "")
     link = link_match.group(0).rstrip(").,>\"'") if link_match else ""
@@ -220,6 +226,11 @@ def heuristic_parse(msg: EmailMessage, applications: list[dict[str, Any]], candi
         status = ApplicationStatus.SCREENING
     if intent == "interview_invite" and re.search(r"final round|final interview|onsite", text):
         status = ApplicationStatus.FINAL_ROUND
+    # A learned guess moves an application only when very sure, and never closes it or declares an
+    # offer by itself: the e-mail is labelled and flagged for you instead.
+    if learned_probability is not None and (learned_probability < email_intent.STATUS_CONFIDENCE
+                                            or intent in ("rejection", "offer")):
+        status = None
 
     sender_first = (msg.sender_name or "").split(" ")[0] or "there"
     reply = ""
@@ -254,7 +265,7 @@ def heuristic_parse(msg: EmailMessage, applications: list[dict[str, Any]], candi
         "suggested_reply": reply,
         "urgency": "high" if intent in ("interview_invite", "offer", "assessment") else ("medium" if intent == "info_request" else "low"),
         "status_update": status.value if status else "none",
-        "method": "heuristic",
+        "method": "naive_bayes" if learned_probability is not None else "heuristic",
     }
 
 

@@ -21,6 +21,9 @@ class Application(Base):
     __table_args__ = (
         UniqueConstraint("user_id", "job_id", name="uq_application_user_job"),
         Index("idx_applications_user_status", "user_id", "status"),
+        # Swipe Review orders a user's deck by score; the undo stack and "kept today" read by review time.
+        Index("idx_applications_user_score", "user_id", "match_score"),
+        Index("idx_applications_user_reviewed", "user_id", "reviewed_at"),
     )
 
     id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
@@ -90,6 +93,7 @@ class Application(Base):
 
 class ApplicationStatusHistory(Base):
     __tablename__ = "application_status_history"
+    __table_args__ = (Index("idx_status_history_app_created", "application_id", "created_at"),)  # timeline, in order
 
     id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
     application_id: Mapped[uuid.UUID] = mapped_column(

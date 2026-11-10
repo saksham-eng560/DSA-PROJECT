@@ -17,6 +17,7 @@ from sqlalchemy.orm import Session
 
 from app.api.deps import DB, CurrentUser, parse_uuid
 from app.api.serializers import application_summary, iso, job_out
+from app.dsa.linear import Stack
 from app.models.application import Application
 from app.models.enums import ApplicationStatus, JobType
 from app.models.job import Job
@@ -106,6 +107,7 @@ def _card(app: Application, prefs: dict | None = None) -> dict:  # type: ignore[
         "match_reasoning": app.match_reasoning,
         "strong_matches": details.get("strong_matches") or [],
         "missing_skills": details.get("missing_skills") or [],
+        "transferable_skills": details.get("transferable_skills") or [],  # missing, but close to one you have
         "heads_up": details.get("heads_up") or [],
         "scores": {k: details.get(k) for k in ("skills_match", "experience_match", "industry_match", "location_match",
                                                "compensation_match") if details.get(k) is not None},
@@ -188,6 +190,42 @@ def bulk_decide(body: BulkDecisionIn, user: CurrentUser, db: DB) -> dict:
         else:
             orch.skip_application(db, app, note="Skipped in Swipe Review (bulk)")
     return {"count": len(apps), "decision": body.decision, "stats": _stats(db, user)}
+
+
+UNDO_DEPTH = 20
+
+
+def _swipe_stack(db: Session, user: User) -> Stack[Application]:
+    """Your most recent swipes as a stack: the latest decision is on top."""
+    recent = db.scalars(select(Application)
+                        .where(Application.user_id == user.id, Application.review_decision.is_not(None),
+                               Application.reviewed_at.is_not(None))
+                        .order_by(Application.reviewed_at.desc(), Application.id).limit(UNDO_DEPTH)).all()
+    return Stack(reversed(recent))  # pushed oldest first, so pop() gives the most recent swipe
+
+
+@router.get("/history")
+def history(user: CurrentUser, db: DB) -> dict:
+    """The undo stack: your last swipes, newest first."""
+    stack = _swipe_stack(db, user)
+    return {"depth": len(stack),
+            "items": [{"application_id": str(a.id), "decision": a.review_decision, "role_title": a.job.role_title,
+                       "company_name": a.job.company_name, "reviewed_at": iso(a.reviewed_at), "status": a.status.value}
+                      for a in stack]}
+
+
+@router.post("/undo-last")
+def undo_last(user: CurrentUser, db: DB) -> dict:
+    """Undo your most recent swipe: pop it off the stack and put the card back on the deck."""
+    stack = _swipe_stack(db, user)
+    if not stack:
+        raise HTTPException(status.HTTP_409_CONFLICT, "Nothing to undo")
+    app = stack.pop()
+    try:
+        orch.undo_review(db, app)
+    except ValueError as exc:
+        raise HTTPException(status.HTTP_409_CONFLICT, str(exc)) from exc
+    return {"card": _card(app, user.prefs), "stats": _stats(db, user), "remaining": len(stack)}
 
 
 @router.post("/{application_id}")
